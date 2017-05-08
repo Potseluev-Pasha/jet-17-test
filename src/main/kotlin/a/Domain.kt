@@ -13,16 +13,20 @@ data class State(val elems: List<Boolean>) {
     override fun toString(): String {
         return elems.fold("", { str, v -> str + if (v) " + " else " - " })
     }
+
+    fun sameStates(): Set<State> = setOf(this, State(elems.asReversed()))
 }
 
 data class Problem(val state: State, val flipSize: Int) {
-    fun flipFrom(start: Int): Problem {
+    private fun flipFrom(start: Int): Problem {
         return Problem(state.flipped(start, flipSize), flipSize)
     }
 
     fun solved(): Boolean = state.solved()
 
-    fun neighbors(): List<Problem> = (0..(state.elems.size - flipSize)).map { flipFrom(it) }.toList()
+    private fun estimation() = state.elems.filterNot { it }.size
+
+    private fun neighbors(): Set<Problem> = (0..(state.elems.size - flipSize)).map { flipFrom(it) }.toSet()
+
+    fun perspectiveNeighbors() = neighbors().filterNot { it.estimation() - this.estimation() == flipSize }
 }
-
-

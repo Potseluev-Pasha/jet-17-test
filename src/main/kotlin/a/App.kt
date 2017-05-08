@@ -1,21 +1,19 @@
 package a
 
-import java.io.File
-
 object Main {
     @JvmStatic
     fun main(args: Array<String>) {
-        File("/home/pavel/IdeaProjects/test2/src/main/resources/a/A-large-practice.in").readLines()
-        val problem = parseProblem("-+++++++++ 2")
-        println(Solver.solve(problem))
-    }
+        fun parseProblem(str: String): Problem {
+            val split = str.split(" ")
+            val flipSize = split[1].toInt()
+            val state = split[0].map { it == '+' }
+            return Problem(State(state), flipSize)
+        }
 
+        val paths = listOf("./src/main/resources/a/A-small-practice.in"
+                to "./src/main/results/a/A-small-practice.out")
 
-
-    fun parseProblem(str: String): Problem {
-        val split = str.split(" ")
-        val flipSize = split[1].toInt()
-        val state = split[0].map { it == '+' }
-        return Problem(State(state), flipSize)
+        Printer.print(tasks = paths, solver = { (Solver.solve(parseProblem(it)) ?: "IMPOSSIBLE").toString() })
+//        println(Solver.solve(parseProblem("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ 3")))
     }
 }
