@@ -1,18 +1,13 @@
 package a
 
 object Solver {
-    fun solve(problem: Problem): Int? = bfs(listOf(problem to 0), emptySet())
+    fun solve(problem: Problem): Int? = solve(problem, 0)
 
-    private fun newStates(problem: Problem, counter: Int, visited: Set<State>): List<Pair<Problem, Int>> =
-            problem.perspectiveNeighbors()
-                    .filterNot { it.state.sameStates().find { visited.contains(it) } != null }
-                    .map { it to (counter + 1) }
-
-    tailrec private fun bfs(queue: List<Pair<Problem, Int>>, visited: Set<State>): Int? =
-            if (queue.isEmpty()) null
+    tailrec private fun solve(problem: Problem, step: Int): Int? =
+            if (problem.solved()) step
             else {
-                val (problem, counter) = queue.first()
-                if (problem.solved()) counter
-                else bfs(queue.drop(1) + newStates(problem, counter, visited), visited + problem.state)
+                val flipped = problem.nextFlipped()
+                if (flipped == null) null
+                else solve(flipped, step + 1)
             }
 }
