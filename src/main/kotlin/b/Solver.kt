@@ -4,14 +4,14 @@ typealias Number = List<Int>
 
 object Solver {
     fun solve(number: Number): Number {
-        return tryToTidy(number).dropWhile { it == 0 }
+        return toTidy(number).dropWhile { it == 0 }
     }
 
-    tailrec private fun tryToTidy(number: Number): Number {
+    tailrec private fun toTidy(number: Number): Number {
         var prev = -1
         val tidyFracture = number.indexOfFirst { val p = it < prev; prev = it; p }
         return if (tidyFracture == -1) number
-        else tryToTidy(number
+        else toTidy(number
                 .take(tidyFracture - 1)
                 .plus(number[tidyFracture - 1].dec())
                 .plus(fill(number.size - tidyFracture, 9)))
