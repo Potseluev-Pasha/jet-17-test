@@ -1,6 +1,6 @@
 package b
 
-object Main {
+object App {
     @JvmStatic
     fun main(args: Array<String>) {
         fun parseProblem(str: String): Number = str.toList().map { it - '0' }

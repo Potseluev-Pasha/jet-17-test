@@ -1,13 +1,9 @@
 package a
 
 object Solver {
-    fun solve(problem: Problem): Int? = solve(problem, 0)
-
-    tailrec private fun solve(problem: Problem, step: Int): Int? =
+    fun solve(problem: Problem, step: Int = 0): Int? =
             if (problem.solved()) step
-            else {
-                val flipped = problem.nextFlipped()
-                if (flipped == null) null
-                else solve(flipped, step + 1)
-            }
+            else problem.nextFlipped()?.let { solve(it, step + 1) }
+
+    fun Problem.nextFlipped() = flippedFrom(state.indexOf(false))
 }
